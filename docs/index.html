@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="JAL-AESR INDIA interactive reviewer companion: agricultural water pathways across India's agro-ecological regions." />
+  <title>JAL-AESR INDIA | Interactive Reviewer Companion</title>
+
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+
+  <style>
+    :root{
+      --ink:#22313a;
+      --muted:#64747d;
+      --line:#d8e0e3;
+      --panel:#ffffff;
+      --soft:#f4f7f8;
+      --gw:#315f8c;
+      --rain:#d98b2b;
+      --sw:#16877e;
+      --accent:#1f5968;
+      --shadow:0 8px 28px rgba(20,42,50,.09);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#eef3f4;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{min-height:100vh}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .topbar{
+      background:linear-gradient(120deg,#f8fbfb 0%,#eef5f4 55%,#edf3f8 100%);
+      border-bottom:1px solid var(--line);
+      padding:28px 34px 24px;
+    }
+    .topbar-inner{max-width:1500px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
+    .eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:8px}
+    h1{font-size:clamp(1.8rem,3vw,3rem);line-height:1.05;margin:0 0 10px;font-weight:800;letter-spacing:-.025em}
+    .subtitle{max-width:1050px;font-size:1.02rem;line-height:1.55;color:var(--muted);margin:0}
+    .toplinks{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .pill-link{background:#fff;border:1px solid var(--line);padding:9px 13px;border-radius:999px;font-size:.82rem;font-weight:700;box-shadow:0 2px 10px rgba(24,49,58,.04)}
+
+    .question-wrap{max-width:1500px;margin:18px auto 0;padding:0 34px}
+    .question{
+      background:#fff;border:1px solid #cfdadc;border-left:5px solid var(--accent);border-radius:12px;
+      padding:14px 18px;box-shadow:var(--shadow);font-size:.96rem;line-height:1.5;
+    }
+    .question strong{color:var(--accent)}
+
+    .workspace{max-width:1500px;margin:18px auto;padding:0 34px 28px;display:grid;grid-template-columns:340px minmax(0,1fr);gap:18px}
+    .sidebar{display:flex;flex-direction:column;gap:14px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:16px}
+    .card h2,.card h3{margin:0 0 10px}
+    .card h2{font-size:1rem}.card h3{font-size:.9rem}
+    .small{font-size:.79rem;color:var(--muted);line-height:1.5}
+    .status{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--muted);margin-top:8px}
+    .dot{width:9px;height:9px;border-radius:50%;background:#b5c0c5}.dot.ready{background:#2f8a65}.dot.error{background:#b74e55}
+
+    .pilot-buttons{display:grid;gap:8px;margin-top:8px}
+    .pilot-btn{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 11px;text-align:left;cursor:pointer;transition:.18s ease;font-weight:800;color:var(--ink)}
+    .pilot-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(20,42,50,.08)}
+    .pilot-btn span{display:block;font-weight:500;color:var(--muted);font-size:.74rem;margin-top:3px}
+    .pilot-btn.p1{border-left:5px solid var(--gw)}
+    .pilot-btn.p2{border-left:5px solid var(--rain)}
+    .pilot-btn.p3{border-left:5px solid var(--sw)}
+
+    label{display:block;font-size:.76rem;font-weight:800;margin:10px 0 6px;color:#48575f}
+    select,button.reset{width:100%;border:1px solid #cbd5d9;border-radius:9px;background:#fff;padding:9px 10px;color:var(--ink);font-size:.8rem}
+    select{cursor:pointer}
+    button.reset{cursor:pointer;font-weight:800;margin-top:9px;background:#f7fafb}
+
+    .detail-grid{display:grid;grid-template-columns:1fr;gap:7px;margin-top:10px}
+    .kv{display:grid;grid-template-columns:92px 1fr;gap:8px;padding-bottom:6px;border-bottom:1px dashed #e2e7e9;font-size:.77rem}
+    .kv:last-child{border-bottom:0}.kv b{color:#52616a}.kv span{color:#263840;word-break:break-word}
+
+    .map-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;min-height:720px}
+    #map{height:720px;width:100%;background:#e9eff1}
+    .map-title{position:absolute;top:12px;left:54px;z-index:650;background:rgba(255,255,255,.94);border:1px solid #d5dfe2;border-radius:10px;padding:9px 12px;box-shadow:0 4px 16px rgba(18,43,52,.10);max-width:390px}
+    .map-title b{font-size:.86rem}.map-title span{display:block;font-size:.70rem;color:var(--muted);margin-top:2px}
+
+    .legend{background:rgba(255,255,255,.96);padding:10px 12px;border:1px solid #d3dde0;border-radius:9px;box-shadow:0 4px 14px rgba(18,43,52,.08);font-size:.72rem;line-height:1.45;max-height:255px;overflow:auto}
+    .legend-title{font-weight:900;margin-bottom:5px;color:#34474f}
+    .legend-row{display:flex;align-items:center;gap:7px;margin:3px 0}
+    .swatch{width:13px;height:13px;border-radius:3px;border:1px solid rgba(0,0,0,.12);flex:0 0 13px}
+    .circle-swatch{width:11px;height:11px;border-radius:50%;flex:0 0 11px}
+
+    .below{max-width:1500px;margin:0 auto 34px;padding:0 34px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .path-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .path-card h3{margin:0 0 7px;font-size:1rem}.path-card p{font-size:.82rem;line-height:1.52;color:var(--muted);margin:0}
+    .path-card.gw{border-top:5px solid var(--gw)}.path-card.rain{border-top:5px solid var(--rain)}.path-card.sw{border-top:5px solid var(--sw)}
+
+    .national{max-width:1500px;margin:0 auto 38px;padding:0 34px}
+    .national-inner{background:#20343d;color:white;border-radius:15px;padding:20px 22px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;box-shadow:var(--shadow)}
+    .national h2{font-size:1.05rem;margin:0 0 6px}.national p{margin:0;color:#d8e3e6;font-size:.85rem;line-height:1.5}
+    .architecture{font-size:.78rem;font-weight:800;white-space:nowrap;color:#e9f1f3;border:1px solid rgba(255,255,255,.22);padding:12px 14px;border-radius:10px}
+
+    footer{border-top:1px solid var(--line);background:#f8fafb;padding:18px 34px;color:var(--muted);font-size:.75rem}
+    .footer-inner{max-width:1500px;margin:auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+    .leaflet-popup-content{font-family:inherit;font-size:.78rem;line-height:1.45;min-width:220px}
+    .popup-title{font-size:.88rem;font-weight:900;color:#23363e;margin-bottom:6px}
+    .popup-regime{font-weight:800;margin-bottom:7px}
+    .popup-table div{display:grid;grid-template-columns:82px 1fr;gap:7px;border-top:1px solid #eef1f2;padding:4px 0}
+    .popup-table b{color:#617079}
+
+    @media (max-width:1000px){
+      .topbar-inner{grid-template-columns:1fr}.toplinks{justify-content:flex-start}
+      .workspace{grid-template-columns:1fr}.map-card,#map{min-height:620px;height:620px}.sidebar{display:grid;grid-template-columns:repeat(2,1fr)}
+      .below{grid-template-columns:1fr}.national-inner{grid-template-columns:1fr}.architecture{white-space:normal}
+    }
+    @media (max-width:680px){
+      .topbar,.question-wrap,.workspace,.below,.national{padding-left:16px;padding-right:16px}
+      .workspace{padding-bottom:20px}.sidebar{display:flex}.map-card,#map{min-height:560px;height:560px}.map-title{left:48px;right:10px;max-width:none}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <div class="eyebrow">Interactive research companion · proposal-stage</div>
+        <h1>JAL-AESR INDIA</h1>
+        <p class="subtitle">A NISAR–IRS multi-sensor framework for assessing surface–groundwater coupling, irrigation security and agricultural water resilience across India’s agro-ecological regions.</p>
+      </div>
+      <nav class="toplinks" aria-label="Reviewer links">
+        <a class="pill-link" href="https://github.com/zubairgis/jal-aesr-india" target="_blank" rel="noopener">GitHub repository</a>
+        <a class="pill-link" href="https://github.com/zubairgis/jal-aesr-india/blob/main/docs/PROJECT_OVERVIEW.md" target="_blank" rel="noopener">Scientific concept</a>
+        <a class="pill-link" href="https://github.com/zubairgis/jal-aesr-india/blob/main/docs/REVIEWER_GUIDE.md" target="_blank" rel="noopener">60-second reviewer guide</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="question-wrap">
+    <div class="question"><strong>Explore the research question:</strong> How can the same climate variability translate into different agricultural water risks when farmers depend primarily on groundwater, direct rainfall, or stored and routed surface water?</div>
+  </section>
+
+  <main class="workspace">
+    <aside class="sidebar">
+      <section class="card">
+        <h2>Three proof-of-need regimes</h2>
+        <p class="small">Select a pilot to zoom directly to a contrasting agricultural water pathway.</p>
+        <div class="pilot-buttons">
+          <button class="pilot-btn p1" data-pilot="P1">P1 · Groundwater-buffered<span>Karnal, Haryana · PUNDRAK_2</span></button>
+          <button class="pilot-btn p2" data-pilot="P2">P2 · Rainfall-dependent<span>Yavatmal, Maharashtra · Arni</span></button>
+          <button class="pilot-btn p3" data-pilot="P3">P3 · Surface-water-buffered<span>Mettur–Cauvery, Tamil Nadu</span></button>
+        </div>
+        <button class="reset" id="resetMap">Reset to India</button>
+      </section>
+
+      <section class="card">
+        <h2>Explore an agro-ecological subregion</h2>
+        <p class="small">Select any AESR polygon to inspect the agro-ecological context that the proposed national water-security framework will use.</p>
+        <label for="aesrSelect">AESR</label>
+        <select id="aesrSelect"><option value="">Loading AESRs…</option></select>
+        <div id="aesrDetail" class="detail-grid">
+          <div class="small">Click an AESR polygon or choose one from the list.</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Map status</h2>
+        <div class="status"><span id="stateDot" class="dot"></span><span id="stateStatus">Loading India state/UT layer…</span></div>
+        <div class="status"><span id="aesrDot" class="dot"></span><span id="aesrStatus">Loading AESR layer…</span></div>
+        <div class="status"><span id="pilotDot" class="dot"></span><span id="pilotStatus">Loading pilot sites…</span></div>
+        <p class="small" style="margin-bottom:0">The page prefers local copies in <code>docs/data/</code> and falls back to the established web-ready layers in the companion AESR repository.</p>
+      </section>
+    </aside>
+
+    <section class="map-card" aria-label="Interactive India agro-ecological map">
+      <div class="map-title"><b>India · agro-ecological context and pilot water regimes</b><span>Use the layer control, click an AESR, or select one of the three proof-of-need landscapes.</span></div>
+      <div id="map"></div>
+    </section>
+  </main>
+
+  <section class="below">
+    <article class="path-card gw">
+      <h3>Groundwater buffering</h3>
+      <p>Groundwater access can sustain irrigation when rainfall is deficient, while transferring pressure to aquifer storage. Agricultural supply can therefore appear resilient even as subsurface stress accumulates.</p>
+    </article>
+    <article class="path-card rain">
+      <h3>Rainfall dependence</h3>
+      <p>Where irrigation buffering is limited, crop-water exposure responds more directly to monsoon timing, dry spells and intra-seasonal rainfall variability.</p>
+    </article>
+    <article class="path-card sw">
+      <h3>Surface-water buffering</h3>
+      <p>Reservoirs, rivers, tanks and canals store or route water across space and time, so agricultural water availability may differ substantially from immediate local rainfall.</p>
+    </article>
+  </section>
+
+  <section class="national">
+    <div class="national-inner">
+      <div>
+        <h2>Pilot evidence → national scaling</h2>
+        <p>The three locations illustrate mechanisms, not national representativeness. The proposed Research Chair will extend the framework across India’s agro-ecological regions using monitored groundwater and surface water, rainfall, crop timing, irrigation dependence, NISAR, IRS and complementary Earth observation.</p>
+      </div>
+      <div class="architecture">Water source × crop timing × agro-ecological context → irrigation security</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <span>JAL-AESR INDIA · interactive reviewer companion</span>
+      <span>Reference layers provide geographic/agro-ecological context only; they are not project water-security outputs.</span>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    const COLORS = { P1:'#315f8c', P2:'#d98b2b', P3:'#16877e' };
+    const climatePalette = ['#d9f0d3','#addd8e','#78c679','#41ab5d','#238443','#ccece6','#99d8c9','#66c2a4','#2ca25f','#fee8c8','#fdbb84','#e34a33','#efedf5','#bcbddc','#756bb1','#d9d9d9'];
+
+    const map = L.map('map', { zoomControl:true, preferCanvas:true }).setView([22.8,79.4],5);
+
+    const light = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      maxZoom:19,
+      attribution:'&copy; OpenStreetMap contributors &copy; CARTO'
+    }).addTo(map);
+    const imagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom:19,
+      attribution:'Tiles &copy; Esri'
+    });
+
+    const baseMaps = { 'Scientific light': light, 'Satellite imagery': imagery };
+    const overlayMaps = {};
+    const layerControl = L.control.layers(baseMaps, overlayMaps, {collapsed:false, position:'topright'}).addTo(map);
+
+    let statesLayer, aesrLayer, pilotLayer;
+    let aesrIndex = new Map();
+    let climateColors = new Map();
+    let indiaBounds = null;
+    let pilotFeatures = [];
+
+    function first(props, keys, fallback='—') {
+      for (const k of keys) {
+        if (props && props[k] !== undefined && props[k] !== null && String(props[k]).trim() !== '') return props[k];
+      }
+      return fallback;
+    }
+
+    async function fetchWithFallback(localUrl, fallbackUrl) {
+      try {
+        const r = await fetch(localUrl, {cache:'no-store'});
+        if (!r.ok) throw new Error('local not available');
+        return { data: await r.json(), source:'local' };
+      } catch (e) {
+        const r = await fetch(fallbackUrl, {cache:'no-store'});
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return { data: await r.json(), source:'companion repository' };
+      }
+    }
+
+    function setStatus(kind, ok, text) {
+      const dot = document.getElementById(kind+'Dot');
+      const label = document.getElementById(kind+'Status');
+      dot.classList.remove('ready','error');
+      dot.classList.add(ok ? 'ready' : 'error');
+      label.textContent = text;
+    }
+
+    function climateKey(props) {
+      return String(first(props,['CLIM_STD','climate','CLIMATE'],'Unspecified'));
+    }
+
+    function buildClimateColors(features) {
+      const vals = [...new Set(features.map(f => climateKey(f.properties)))].sort();
+      vals.forEach((v,i) => climateColors.set(v, climatePalette[i % climatePalette.length]));
+    }
+
+    function aesrPopup(props) {
+      const code = first(props,['aesr_code','AESR','AESR_CODE']);
+      const sub = first(props,['subregion','SUBREGION']);
+      return `<div class="popup-title">AESR ${code}</div>
+        <div class="popup-table">
+          <div><b>Subregion</b><span>${sub}</span></div>
+          <div><b>AER</b><span>${first(props,['aer_code','AER_CODE'])}</span></div>
+          <div><b>Soil</b><span>${first(props,['SOIL_GRP','soil'])}</span></div>
+          <div><b>Climate</b><span>${first(props,['CLIM_STD','climate'])}</span></div>
+          <div><b>LGP</b><span>${first(props,['lgp_ref','LGP_ORDER','LGP'])}</span></div>
+          <div><b>AWC</b><span>${first(props,['AWC_REF','awc_ref'])}</span></div>
+        </div>
+        <div style="margin-top:8px;color:#64747d">Proposed JAL-AESR assessment: rainfall reliability · surface-water persistence · groundwater stress/recovery · irrigation dependence · crop-stage water demand · NISAR/IRS response.</div>`;
+    }
+
+    function showAESRDetail(props) {
+      const detail = document.getElementById('aesrDetail');
+      const rows = [
+        ['AESR', first(props,['aesr_code','AESR','AESR_CODE'])],
+        ['Subregion', first(props,['subregion','SUBREGION'])],
+        ['AER', first(props,['aer_code','AER_CODE'])],
+        ['Soil', first(props,['SOIL_GRP','soil'])],
+        ['Climate', first(props,['CLIM_STD','climate'])],
+        ['LGP', first(props,['lgp_ref','LGP_ORDER','LGP'])],
+        ['AWC', first(props,['AWC_REF','awc_ref'])]
+      ];
+      detail.innerHTML = rows.map(r => `<div class="kv"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('') +
+        `<div class="small" style="margin-top:7px"><b>Full-project lens:</b> groundwater stress/recovery, surface-water reliability, rainfall timing, irrigation dependence, crop-stage demand and EO response.</div>`;
+    }
+
+    function pilotPopup(props) {
+      const color = COLORS[props.pilot] || '#315f8c';
+      return `<div class="popup-title">${props.pilot} · ${props.site}</div>
+        <div class="popup-regime" style="color:${color}">${props.regime}</div>
+        <div class="popup-table">
+          <div><b>Station</b><span>${props.station}</span></div>
+          <div><b>Evidence</b><span>${props.variable}</span></div>
+          <div><b>Observed</b><span>${props.observation_window}</span></div>
+          <div><b>Records</b><span>${Number(props.records).toLocaleString()}</span></div>
+        </div>
+        <div style="margin-top:8px;color:#53656e">${props.message}</div>`;
+    }
+
+    function addLegend() {
+      const legend = L.control({position:'bottomright'});
+      legend.onAdd = function() {
+        const div = L.DomUtil.create('div','legend');
+        let html = `<div class="legend-title">Pilot water regimes</div>
+          <div class="legend-row"><span class="circle-swatch" style="background:${COLORS.P1}"></span>Groundwater-buffered</div>
+          <div class="legend-row"><span class="circle-swatch" style="background:${COLORS.P2}"></span>Rainfall-dependent</div>
+          <div class="legend-row"><span class="circle-swatch" style="background:${COLORS.P3}"></span>Surface-water-buffered</div>`;
+        if (climateColors.size) {
+          html += `<div class="legend-title" style="margin-top:8px">AESR climate labels</div>`;
+          [...climateColors.entries()].forEach(([k,c]) => {
+            html += `<div class="legend-row"><span class="swatch" style="background:${c}"></span>${k}</div>`;
+          });
+        }
+        div.innerHTML = html;
+        L.DomEvent.disableClickPropagation(div);
+        return div;
+      };
+      legend.addTo(map);
+    }
+
+    async function loadStates() {
+      const local = './data/india_states_web.geojson';
+      const fallback = 'https://raw.githubusercontent.com/zubairgis/aesr-shift-india/main/data/reference/india_states_web.geojson';
+      try {
+        const {data,source} = await fetchWithFallback(local,fallback);
+        statesLayer = L.geoJSON(data, {
+          style:{color:'#6f7d84',weight:0.8,fillColor:'#f8fafb',fillOpacity:0.13},
+          onEachFeature:(f,l) => {
+            const p=f.properties||{};
+            const name=first(p,['shapeName','state_name','STATE','NAME'],'State / UT');
+            l.bindTooltip(String(name),{sticky:true,direction:'auto'});
+          }
+        }).addTo(map);
+        overlayMaps['State / UT boundaries'] = statesLayer;
+        layerControl.addOverlay(statesLayer,'State / UT boundaries');
+        indiaBounds = statesLayer.getBounds();
+        map.fitBounds(indiaBounds,{padding:[15,15]});
+        setStatus('state',true,`India states/UTs loaded · ${source}`);
+      } catch(e) {
+        console.error(e); setStatus('state',false,'State/UT layer failed to load');
+      }
+    }
+
+    async function loadAESR() {
+      const local = './data/india_aesr_60_web.geojson';
+      const fallback = 'https://raw.githubusercontent.com/zubairgis/aesr-shift-india/main/data/reference/india_aesr_60_web.geojson';
+      try {
+        const {data,source} = await fetchWithFallback(local,fallback);
+        buildClimateColors(data.features || []);
+        aesrLayer = L.geoJSON(data, {
+          style:f => ({color:'#66757d',weight:0.8,fillColor:climateColors.get(climateKey(f.properties)) || '#d9d9d9',fillOpacity:0.36}),
+          onEachFeature:(f,l) => {
+            const p=f.properties||{};
+            const code=String(first(p,['aesr_code','AESR','AESR_CODE'],'?'));
+            const sub=String(first(p,['subregion','SUBREGION'],'Agro-ecological subregion'));
+            l.bindTooltip(`<b>AESR ${code}</b><br>${sub}`,{sticky:true});
+            l.bindPopup(aesrPopup(p));
+            l.on('click',() => { showAESRDetail(p); document.getElementById('aesrSelect').value = code; });
+            if (!aesrIndex.has(code)) aesrIndex.set(code,[]);
+            aesrIndex.get(code).push(l);
+          }
+        }).addTo(map);
+        layerControl.addOverlay(aesrLayer,'Agro-ecological subregions');
+
+        const select = document.getElementById('aesrSelect');
+        select.innerHTML = '<option value="">Select AESR…</option>';
+        [...aesrIndex.keys()].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})).forEach(code => {
+          const o=document.createElement('option'); o.value=code; o.textContent=`AESR ${code}`; select.appendChild(o);
+        });
+        select.addEventListener('change',e => {
+          const layers=aesrIndex.get(e.target.value); if(!layers || !layers.length) return;
+          const group=L.featureGroup(layers); map.fitBounds(group.getBounds(),{padding:[40,40],maxZoom:8});
+          layers[0].openPopup(); showAESRDetail(layers[0].feature.properties||{});
+        });
+        setStatus('aesr',true,`AESR framework loaded · ${source}`);
+        addLegend();
+      } catch(e) {
+        console.error(e); setStatus('aesr',false,'AESR layer failed to load');
+      }
+    }
+
+    async function loadPilots() {
+      try {
+        const r=await fetch('./data/pilot_sites.geojson',{cache:'no-store'}); if(!r.ok) throw new Error(`HTTP ${r.status}`);
+        const data=await r.json(); pilotFeatures=data.features||[];
+        pilotLayer=L.geoJSON(data, {
+          pointToLayer:(f,latlng) => L.circleMarker(latlng,{radius:9,color:'#fff',weight:2.3,fillColor:COLORS[f.properties.pilot]||'#315f8c',fillOpacity:1}),
+          onEachFeature:(f,l) => { l.bindPopup(pilotPopup(f.properties||{})); l.bindTooltip(`${f.properties.pilot} · ${f.properties.site}`,{direction:'top',offset:[0,-7]}); }
+        }).addTo(map);
+        layerControl.addOverlay(pilotLayer,'Proof-of-need pilot sites');
+        setStatus('pilot',true,'Three pilot landscapes loaded');
+      } catch(e) {
+        console.error(e); setStatus('pilot',false,'Pilot-sites layer failed to load');
+      }
+    }
+
+    document.querySelectorAll('.pilot-btn').forEach(btn => {
+      btn.addEventListener('click',() => {
+        const id=btn.dataset.pilot; const f=pilotFeatures.find(x => x.properties && x.properties.pilot===id); if(!f) return;
+        const [lon,lat]=f.geometry.coordinates; map.flyTo([lat,lon],9,{duration:.8});
+        if (pilotLayer) pilotLayer.eachLayer(l => { if(l.feature && l.feature.properties.pilot===id) setTimeout(()=>l.openPopup(),850); });
+      });
+    });
+    document.getElementById('resetMap').addEventListener('click',() => { if(indiaBounds) map.fitBounds(indiaBounds,{padding:[15,15]}); else map.setView([22.8,79.4],5); });
+
+    Promise.allSettled([loadStates(),loadAESR(),loadPilots()]);
+  </script>
+</body>
+</html>
