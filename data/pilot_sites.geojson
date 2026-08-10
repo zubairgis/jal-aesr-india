@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "name": "JAL_AESR_RapidPilot_Sites",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "pilot": "P1",
+        "site": "Karnal, Haryana",
+        "station": "PUNDRAK_2",
+        "regime": "Groundwater-buffered",
+        "variable": "Groundwater-level variability",
+        "observation_window": "Nov 2022–Sep 2025",
+        "records": 3653,
+        "message": "Irrigation can buffer rainfall deficits while pressure accumulates in the aquifer system."
+      },
+      "geometry": {"type": "Point", "coordinates": [76.940638, 29.720073]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pilot": "P2",
+        "site": "Yavatmal, Maharashtra",
+        "station": "Arni",
+        "regime": "Rainfall-dependent",
+        "variable": "Reported rainfall variability",
+        "observation_window": "Mar 2021–Oct 2024",
+        "records": 268,
+        "message": "Crop-water exposure responds more directly to rainfall timing and intra-seasonal variability."
+      },
+      "geometry": {"type": "Point", "coordinates": [77.948611, 20.061944]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pilot": "P3",
+        "site": "Mettur–Cauvery, Tamil Nadu",
+        "station": "Mettur Reservoir",
+        "regime": "Surface-water-buffered",
+        "variable": "Surface-water-level variability",
+        "observation_window": "Jan 2021–Dec 2025",
+        "records": 25007,
+        "message": "Stored and routed surface water can decouple immediate local rainfall from irrigation availability."
+      },
+      "geometry": {"type": "Point", "coordinates": [77.8, 11.8]}
+    }
+  ]
+}
