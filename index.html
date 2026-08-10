@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="JAL-AESR INDIA research observatory: integrating groundwater, rainfall, surface water, crop-water timing and agro-ecological context for agricultural water resilience across India.">
+  <meta name="theme-color" content="#0b3c46">
+  <title>JAL-AESR INDIA | Agricultural Water Resilience Observatory</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="docs/assets/css/style.css?v=2">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a class="brand" href="#overview" aria-label="JAL-AESR INDIA home">
+        <span class="brand-mark">JA</span>
+        <span><strong>JAL-AESR INDIA</strong><small>Agricultural Water Resilience Observatory</small></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+        <a href="#research-case">Research case</a>
+        <a href="#interactive-map">Interactive map</a>
+        <a href="#preliminary-evidence">Evidence</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#objectives">Objectives</a>
+        <a href="#data">Data</a>
+        <a href="#reviewer">Reviewer route</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero section" id="overview">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Proposal-linked digital research platform · sustainability and climate resilience</p>
+          <h1>From hydrological observations to crop-stage agricultural water intelligence across India</h1>
+          <p class="lead">JAL-AESR INDIA proposes a NISAR–IRS-enabled national framework that connects <strong>rainfall, surface water and groundwater</strong> with <strong>crop-water timing, irrigation dependence and agro-ecological context</strong>—because farmers experience water security as timely access to usable water, not as annual rainfall alone.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#interactive-map">Explore the interactive India map</a>
+            <a class="button secondary" href="#preliminary-evidence">View proof-of-need evidence</a>
+          </div>
+          <p class="anchor-note">This reviewer companion demonstrates the project logic, spatial framework, pilot evidence and open-science architecture before national implementation begins.</p>
+        </div>
+        <aside class="hero-panel" aria-label="Project summary">
+          <div class="metric"><span class="metric-value">20</span><span class="metric-label">Agro-Ecological Regions</span></div>
+          <div class="metric"><span class="metric-value">60</span><span class="metric-label">AESR reference polygons</span></div>
+          <div class="metric"><span class="metric-value">3</span><span class="metric-label">Contrasting water pathways</span></div>
+          <div class="metric"><span class="metric-value">6</span><span class="metric-label">National research objectives</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section-muted" id="research-case">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">01 · Research case</p>
+          <h2>India does not face one agricultural water-security problem</h2>
+        </div>
+        <p class="section-intro">Similar climate variability can produce fundamentally different agricultural consequences depending on whether crop-water demand is buffered by groundwater, exposed directly to rainfall, or supported by stored and routed surface water.</p>
+
+        <div class="path-cards">
+          <article class="path-card gw">
+            <div class="path-tag">P1 · Groundwater-buffered</div>
+            <h3>Karnal, Haryana</h3>
+            <p>Groundwater access can sustain irrigation during rainfall deficits while transferring pressure to aquifer storage and recovery.</p>
+            <div class="path-flow">Climate variability → aquifer storage/access → pumping → crop-stage water supply</div>
+          </article>
+          <article class="path-card rain">
+            <div class="path-tag">P2 · Rainfall-dependent</div>
+            <h3>Yavatmal, Maharashtra</h3>
+            <p>Where irrigation buffering is limited, agricultural exposure responds more directly to monsoon timing, dry spells and rainfall reliability.</p>
+            <div class="path-flow">Climate variability → rainfall timing/dry spells → crop-stage water supply</div>
+          </article>
+          <article class="path-card sw">
+            <div class="path-tag">P3 · Surface-water-buffered</div>
+            <h3>Mettur–Cauvery, Tamil Nadu</h3>
+            <p>Reservoirs, rivers, tanks and canals store or route water through time, partially decoupling agricultural supply from immediate local rainfall.</p>
+            <div class="path-flow">Climate variability → stored/routed surface water → irrigation → crop-stage supply</div>
+          </article>
+        </div>
+
+        <div class="premise">
+          <p class="premise-label">Central proposition</p>
+          <blockquote>Agricultural water security depends not only on how much water exists, but on where it is stored, how farmers can access it, and whether it is available when crops actually require it.</blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="interactive-map">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">02 · Interactive national spatial framework</p>
+          <h2>Explore India’s agro-ecological context and the three proof-of-need water regimes</h2>
+        </div>
+        <p class="section-intro">Click any AESR polygon to inspect its climate, soil, growing-period and water-capacity context. Use the pilot buttons to compare groundwater-buffered, rainfall-dependent and surface-water-buffered agricultural systems. The three pilots demonstrate mechanisms; the proposed programme scales assessment across the full national AESR framework.</p>
+
+        <div class="map-shell">
+          <div class="map-toolbar">
+            <div><strong>Interactive India · AESR Water Resilience Explorer</strong><span>States/UTs · AESRs · pilot regimes · light/satellite basemaps</span></div>
+            <div class="map-actions">
+              <button class="map-action gw" type="button" data-pilot="P1">Karnal · groundwater</button>
+              <button class="map-action rain" type="button" data-pilot="P2">Yavatmal · rainfall</button>
+              <button class="map-action sw" type="button" data-pilot="P3">Mettur · surface water</button>
+              <button class="map-action" type="button" id="resetMap">Reset India</button>
+            </div>
+          </div>
+          <div class="map-grid">
+            <aside class="map-sidebar">
+              <div>
+                <h3>Explore an AESR</h3>
+                <p class="small">Select a subregion or click directly on the map.</p>
+                <label for="aesrSelect">Agro-Ecological Subregion</label>
+                <select id="aesrSelect"><option value="">Loading AESRs…</option></select>
+                <div id="aesrDetail" class="map-detail"><p class="small">The proposed JAL-AESR assessment will combine water-source dynamics with crop timing and irrigation dependence inside each agro-ecological context.</p></div>
+              </div>
+              <div>
+                <h3>Live layer status</h3>
+                <div class="status"><span id="stateDot" class="dot"></span><span id="stateStatus">Loading India state/UT layer…</span></div>
+                <div class="status"><span id="aesrDot" class="dot"></span><span id="aesrStatus">Loading AESR layer…</span></div>
+                <div class="status"><span id="pilotDot" class="dot"></span><span id="pilotStatus">Loading pilot sites…</span></div>
+                <p class="small">The web map uses local GeoJSON copies in this repository so the reviewer companion is self-contained and reproducible.</p>
+              </div>
+            </aside>
+            <div id="map" aria-label="Interactive map of India agro-ecological subregions and pilot water regimes"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-muted" id="preliminary-evidence">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">03 · Preliminary proof of need</p>
+          <h2>Existing observations already reveal different water-source behaviours</h2>
+        </div>
+        <p class="section-intro">The pilot deliberately uses simple in-situ observations rather than reproducing the full proposed national analysis. Its purpose is to demonstrate why rainfall, groundwater and surface water must be interpreted together with agricultural demand timing.</p>
+
+        <div class="pilot-summary">
+          <article class="pilot-stat gw">
+            <div class="pilot-no">P1 · Groundwater-buffered</div>
+            <h3>Karnal, Haryana</h3>
+            <p>Groundwater-level observations from PUNDRAK_2.</p>
+            <div class="signal-grid">
+              <div class="signal"><strong data-records="P1">3,653</strong><span>observations</span></div>
+              <div class="signal"><strong>Nov 2022–Sep 2025</strong><span>available window</span></div>
+            </div>
+          </article>
+          <article class="pilot-stat rain">
+            <div class="pilot-no">P2 · Rainfall-dependent</div>
+            <h3>Yavatmal, Maharashtra</h3>
+            <p>Reported rainfall observations from Arni.</p>
+            <div class="signal-grid">
+              <div class="signal"><strong data-records="P2">268</strong><span>observations</span></div>
+              <div class="signal"><strong>Mar 2021–Oct 2024</strong><span>available window</span></div>
+            </div>
+          </article>
+          <article class="pilot-stat sw">
+            <div class="pilot-no">P3 · Surface-water-buffered</div>
+            <h3>Mettur–Cauvery, Tamil Nadu</h3>
+            <p>Surface-water-level observations from Mettur Reservoir.</p>
+            <div class="signal-grid">
+              <div class="signal"><strong data-records="P3">25,007</strong><span>observations</span></div>
+              <div class="signal"><strong>Jan 2021–Dec 2025</strong><span>available window</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="premise">
+          <p class="premise-label">What the pilot establishes</p>
+          <blockquote>Meteorological water availability and agricultural water availability are not equivalent. A source-aware, crop-timed framework is therefore required before irrigation security can be diagnosed nationally.</blockquote>
+        </div>
+        <p class="section-intro" style="margin-top:1.2rem">The pilot does not claim national representativeness, causal attribution, a common physical stress scale, complete temporal coverage at every site, or direct groundwater measurement by NISAR.</p>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="architecture">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">04 · National research architecture</p>
+          <h2>Water source × crop timing × agro-ecological context</h2>
+        </div>
+        <p class="section-intro">The full programme will transform fragmented hydrological observations into crop-stage agricultural water intelligence while preserving source-specific physics and uncertainty.</p>
+        <div class="architecture" aria-label="JAL-AESR analytical architecture">
+          <div class="arch-box"><strong>Observe</strong><span>Rainfall · surface water · soil moisture · groundwater · recharge · irrigation source</span></div><div class="arch-arrow">→</div>
+          <div class="arch-box"><strong>Integrate</strong><span>NISAR · IRS/Resourcesat · EOS-04/RISAT · monitored national observations</span></div><div class="arch-arrow">→</div>
+          <div class="arch-box"><strong>Align to agriculture</strong><span>Crop calendars · critical stages · irrigation dependence · crop-water demand</span></div><div class="arch-arrow">→</div>
+          <div class="arch-box"><strong>Deliver</strong><span>AESR irrigation-security classes · uncertainty · resilience pathways · Digital Water Observatory</span></div>
+        </div>
+        <div class="method-grid">
+          <article><span class="method-no">STATE</span><h3>AgroWaterState</h3><p>Surface water, soil moisture, groundwater, recharge, irrigation dependence and crop-water demand are modelled as connected but non-equivalent components.</p></article>
+          <article><span class="method-no">SECURITY</span><h3>Irrigation security</h3><p>Capacity of the accessible water system to meet crop-water requirements during critical growth stages with acceptable reliability and without persistent groundwater depletion.</p></article>
+          <article><span class="method-no">VALIDATION</span><h3>Observation first</h3><p>Groundwater state is anchored to monitored records. NISAR supports near-surface moisture, inundation, agricultural response and physically appropriate deformation analysis—not direct groundwater storage measurement.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="objectives">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">05 · Research objectives</p>
+          <h2>Six linked objectives from national data harmonisation to operational water intelligence</h2>
+        </div>
+        <ol class="objective-list">
+          <li><span>O1</span><div><h3>National data cube</h3><p>Build a harmonised surface-water–groundwater–irrigation data architecture across India’s agro-ecological regions.</p></div></li>
+          <li><span>O2</span><div><h3>Surface-water reliability</h3><p>Quantify seasonal availability, persistence, storage and routing of surface-water resources relevant to agriculture.</p></div></li>
+          <li><span>O3</span><div><h3>Soil-moisture and irrigation response</h3><p>Use NISAR, Indian EO missions and complementary sensors to characterise near-surface moisture and agricultural response.</p></div></li>
+          <li><span>O4</span><div><h3>Groundwater stress and recovery</h3><p>Quantify monitored groundwater stress, recovery and recharge behaviour, with InSAR only where physically appropriate.</p></div></li>
+          <li><span>O5</span><div><h3>Crop-stage sufficiency</h3><p>Evaluate water-source coupling, irrigation dependence and crop-stage water sufficiency across contrasting AESRs.</p></div></li>
+          <li><span>O6</span><div><h3>National observatory</h3><p>Develop and independently validate agricultural water-resilience classes and the Digital Water Observatory.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section-muted" id="data">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">06 · India-first data architecture</p>
+          <h2>Long-term observations provide depth; NISAR and Indian EO provide new spatial and temporal intelligence</h2>
+        </div>
+        <div class="tier-grid">
+          <article class="tier"><span>Water observations</span><h3>Groundwater</h3><p>CGWB, NWDP, India-WRIS and State groundwater departments.</p><small>State, recovery and long-term change anchored to monitored observations</small></article>
+          <article class="tier"><span>Water observations</span><h3>Surface water</h3><p>CWC, NWDP/India-WRIS, reservoirs, rivers, canals, tanks and command areas where available.</p><small>Availability · persistence · storage · routing</small></article>
+          <article class="tier"><span>Indian EO</span><h3>NISAR + IRS</h3><p>NISAR, Resourcesat-2/2A, EOS-04/RISAT, Cartosat and Bhuvan resources.</p><small>Moisture · inundation · agricultural response · surface dynamics</small></article>
+          <article class="tier"><span>Agriculture</span><h3>Crop demand</h3><p>Official crop calendars, irrigation-source statistics, crop area and agricultural statistics.</p><small>Critical growth stages · irrigation dependence · crop-water need</small></article>
+          <article class="tier"><span>Complementary</span><h3>Continuity and validation</h3><p>Sentinel, Landsat, SMAP, MODIS and climate products where required.</p><small>Used selectively for validation and spatial/temporal continuity</small></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reviewer">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">07 · Reviewer companion</p>
+          <h2>Trace the scientific case from concept to evidence and reproducibility</h2>
+        </div>
+        <div class="review-grid">
+          <article class="review-card">
+            <h3>60-second review route</h3>
+            <p>This site is designed so the proposal’s central logic can be checked quickly and then traced to its methodological documentation.</p>
+            <div class="review-route">
+              <div class="route-item"><div><a href="#research-case">Read the research case</a><div class="small">Why rainfall alone cannot diagnose agricultural water security.</div></div></div>
+              <div class="route-item"><div><a href="#interactive-map">Explore the AESR map</a><div class="small">Inspect the national agro-ecological framework and pilot mechanisms.</div></div></div>
+              <div class="route-item"><div><a href="#preliminary-evidence">Check proof-of-need evidence</a><div class="small">Review the three source-specific observation pathways and limitations.</div></div></div>
+              <div class="route-item"><div><a href="https://github.com/zubairgis/jal-aesr-india/blob/main/docs/PROJECT_OVERVIEW.md" target="_blank" rel="noopener">Open the scientific architecture</a><div class="small">Central question, objectives and novelty.</div></div></div>
+              <div class="route-item"><div><a href="https://github.com/zubairgis/jal-aesr-india/blob/main/docs/REPRODUCIBILITY.md" target="_blank" rel="noopener">Audit reproducibility</a><div class="small">Version control, provenance, missingness and output traceability.</div></div></div>
+            </div>
+          </article>
+          <aside class="cta-panel">
+            <h3>Digital Water Observatory: prototype philosophy</h3>
+            <p>The interactive companion is deliberately operational from the proposal stage. The funded programme will extend this spatial framework to dynamic national indicators, crop-stage water sufficiency, uncertainty and decision-ready irrigation-security outputs.</p>
+            <div class="cta-actions">
+              <a href="https://github.com/zubairgis/jal-aesr-india" target="_blank" rel="noopener">Open GitHub</a>
+              <a class="secondary" href="https://github.com/zubairgis/jal-aesr-india/blob/main/docs/DATA_SOURCES.md" target="_blank" rel="noopener">Data provenance</a>
+              <a class="secondary" href="https://github.com/zubairgis/jal-aesr-india/blob/main/docs/REVIEWER_GUIDE.md" target="_blank" rel="noopener">Reviewer guide</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div><strong>JAL-AESR INDIA</strong> · Agricultural Water Resilience Observatory</div>
+      <div>Proposal-stage interactive research companion · pilot evidence is illustrative and source-specific</div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="docs/assets/js/app.js?v=2"></script>
+</body>
+</html>
