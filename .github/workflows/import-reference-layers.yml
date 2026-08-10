@@ -1,0 +1,47 @@
+name: Import web reference layers
+
+on:
+  push:
+    paths:
+      - '.github/workflows/import-reference-layers.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-reference-layers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out JAL-AESR INDIA
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download established web-ready India and AESR layers
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p docs/data
+          curl -L --fail --retry 3 \
+            'https://raw.githubusercontent.com/zubairgis/aesr-shift-india/main/data/reference/india_states_web.geojson' \
+            -o docs/data/india_states_web.geojson
+          curl -L --fail --retry 3 \
+            'https://raw.githubusercontent.com/zubairgis/aesr-shift-india/main/data/reference/india_aesr_60_web.geojson' \
+            -o docs/data/india_aesr_60_web.geojson
+          echo 'Imported files:'
+          ls -lh docs/data/india_states_web.geojson docs/data/india_aesr_60_web.geojson
+
+      - name: Commit imported reference layers
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/data/india_states_web.geojson docs/data/india_aesr_60_web.geojson
+          if git diff --cached --quiet; then
+            echo 'Reference layers are already current.'
+            exit 0
+          fi
+          git commit -m 'Import web-ready India and AESR reference layers'
+          git push
