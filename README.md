@@ -4,6 +4,18 @@
 
 > **Core idea:** Agricultural water security is determined not only by how much rain falls, but by where water is stored, how farmers can access it, and whether it is available when crops actually require it.
 
+## Interactive reviewer companion
+
+A proposal-stage interactive research companion is available in [`docs/index.html`](docs/index.html). It is designed for GitHub Pages and lets reviewers:
+
+- explore India’s state/UT and agro-ecological subregion framework;
+- click AESRs to inspect climate, soil, growing-period and water-capacity context;
+- zoom to the three contrasting proof-of-need landscapes;
+- compare groundwater-buffered, rainfall-dependent and surface-water-buffered agricultural pathways; and
+- see how the pilot evidence scales into the proposed national JAL-AESR INDIA architecture.
+
+The web map prefers local GeoJSONs in `docs/data/` and currently falls back to the established web-ready India/AESR layers maintained in the companion `aesr-shift-india` repository. This keeps the reviewer experience live while allowing the repository to become fully self-contained later without changing the map code.
+
 ## Why this project
 
 India does not face one agricultural water-security problem. Similar climate variability can produce very different agricultural outcomes where farming is:
@@ -47,22 +59,25 @@ The central operational concept is **crop-stage water availability**: whether su
 
 ## Repository guide
 
+- [`docs/index.html`](docs/index.html) — interactive reviewer companion and web map
+- [`docs/data/`](docs/data/) — web-ready spatial reference data and pilot sites
 - [`docs/`](docs/) — project concept, data architecture and reproducibility notes
 - [`pilot/`](pilot/) — rapid proof-of-need evidence used in the proposal
 - [`pilot/figures/`](pilot/figures/) — proposal-ready figures
 - [`pilot/tables/`](pilot/tables/) — compact derived tables used to generate figures
 - [`src/`](src/) — reusable analysis code for the full programme
 - [`notebooks/`](notebooks/) — reproducible exploratory and demonstration notebooks
-- [`data/`](data/) — metadata only; raw large datasets are not redistributed here
+- [`data/`](data/) — metadata and redistribution-safe reference/derived material only
 
 ## Reviewer quick route
 
 For a rapid review of the scientific case:
 
-1. Read [`docs/PROJECT_OVERVIEW.md`](docs/PROJECT_OVERVIEW.md).
-2. Open [`pilot/README.md`](pilot/README.md) for the preliminary evidence logic.
-3. View the three proposal figures in [`pilot/figures/`](pilot/figures/).
-4. Check [`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md) for provenance and [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for the open-science plan.
+1. Open the interactive reviewer companion in [`docs/index.html`](docs/index.html).
+2. Read [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md).
+3. View the proposal figures in [`pilot/figures/`](pilot/figures/).
+4. Read [`docs/PROJECT_OVERVIEW.md`](docs/PROJECT_OVERVIEW.md).
+5. Check [`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md) and [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md).
 
 ## Data policy
 
@@ -71,10 +86,10 @@ Large primary datasets, telemetry archives and satellite rasters are intentional
 - source identifiers and metadata;
 - compact derived tables;
 - scripts and notebooks;
-- non-restricted vector layers when redistribution is permitted;
+- non-restricted vector layers where redistribution is permitted;
 - final figures and documentation.
 
-This keeps the repository lightweight, auditable and reproducible without duplicating authoritative data holdings.
+This keeps the repository lightweight, auditable and reproducible without duplicating authoritative national data holdings.
 
 ## Status
 
