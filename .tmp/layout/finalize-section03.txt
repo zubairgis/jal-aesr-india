@@ -1,1 +1,1 @@
-place Figure 1, Figure 2 and Figure 3 only in Section 03
+place Figure 1, Figure 2 and Figure 3 only in Section 03 - corrected workflow
