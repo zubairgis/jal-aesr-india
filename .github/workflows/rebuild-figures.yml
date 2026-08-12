@@ -1,0 +1,41 @@
+name: Rebuild proposal figures
+
+on:
+  push:
+    paths:
+      - '.tmp/figures/finalize.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decode high-resolution web figures
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p docs/assets/figures pilot/figures
+          cat .tmp/figures/f2.part* | tr -d '\n\r ' | base64 -d > docs/assets/figures/Figure2_FINAL_Evidence_Multipanel.webp
+          cat .tmp/figures/f3.part* | tr -d '\n\r ' | base64 -d > docs/assets/figures/Figure3_FINAL_Hero_JAL_AESR.webp
+          cp docs/assets/figures/Figure2_FINAL_Evidence_Multipanel.webp pilot/figures/Figure2_FINAL_Evidence_Multipanel.webp
+          cp docs/assets/figures/Figure3_FINAL_Hero_JAL_AESR.webp pilot/figures/Figure3_FINAL_Hero_JAL_AESR.webp
+          file docs/assets/figures/*.webp
+
+      - name: Commit rebuilt figures
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/assets/figures pilot/figures
+          if git diff --cached --quiet; then
+            echo 'No figure changes to commit.'
+          else
+            git commit -m 'Rebuild clear proposal figures for reviewer companion'
+            git push
+          fi
