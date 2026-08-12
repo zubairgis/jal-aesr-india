@@ -1,0 +1,171 @@
+name: Finalize Section 03 proposal figures
+
+on:
+  push:
+    paths:
+      - '.tmp/layout/finalize-section03.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Put all proposal figures only in Section 03
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          s = path.read_text(encoding='utf-8')
+
+          # Remove Figure 3 from Section 01.
+          s, n1 = re.subn(
+              r'\n\s*<figure class="research-figure">\s*<a[^>]*Figure3_FINAL_Hero_JAL_AESR\.webp.*?</figure>\s*',
+              '\n', s, count=1, flags=re.S
+          )
+
+          # Remove Figure 1/context panel from Section 02.
+          s, n2 = re.subn(
+              r'\n\s*<div class="figure-context-grid">.*?</aside>\s*</div>\s*',
+              '\n', s, count=1, flags=re.S
+          )
+
+          stack = r'''
+        <div class="evidence-figure-stack" aria-label="JAL-AESR INDIA preliminary proof-of-need figures">
+          <figure class="research-figure">
+            <a class="figure-link" href="docs/assets/figures/Figure1_FINAL_India_AESR_WaterRegimes.webp?v=20260812b" target="_blank" rel="noopener" aria-label="Open Figure 1 at full resolution">
+              <img src="docs/assets/figures/Figure1_FINAL_India_AESR_WaterRegimes.webp?v=20260812b" alt="Map of India showing Karnal Haryana, Yavatmal Maharashtra and Mettur-Cauvery Tamil Nadu as three contrasting hydro-agricultural water regimes" loading="lazy">
+            </a>
+            <figcaption class="figure-caption">
+              <span class="figure-kicker">Proposal Figure 1 · Spatial pilot context</span>
+              <strong>Three contrasting hydro-agricultural water regimes.</strong> The map locates the groundwater-buffered, rainfall-dependent and surface-water-buffered proof-of-need landscapes within India’s agro-ecological framework. These sites demonstrate contrasting water-access mechanisms rather than nationally representative conditions.
+            </figcaption>
+          </figure>
+
+          <figure class="research-figure">
+            <a class="figure-link" href="docs/assets/figures/Figure2_FINAL_Evidence_Multipanel.webp?v=20260812b" target="_blank" rel="noopener" aria-label="Open Figure 2 at full resolution">
+              <img src="docs/assets/figures/Figure2_FINAL_Evidence_Multipanel.webp?v=20260812b" alt="Six-panel preliminary evidence figure comparing groundwater, reported rainfall and surface-water variability, demand-period anomalies, seasonal fingerprints and the integrated JAL-AESR framework" loading="lazy">
+            </a>
+            <figcaption class="figure-caption">
+              <span class="figure-kicker">Proposal Figure 2 · Preliminary evidence</span>
+              <strong>Contrasting water-source behaviour during the 2021–2025 analysis window.</strong> Panels A–C show standardized monthly variability in groundwater, reported rainfall and surface-water conditions; Panel D compares relative source states during illustrative agricultural water-demand windows; Panel E shows distinct seasonal water-source fingerprints; and Panel F summarizes why an integrated national framework is required.
+              <span class="figure-note">Observation coverage differs by source. Standardized anomalies are source-specific and are not a composite water-security index or a common physical stress scale.</span>
+            </figcaption>
+          </figure>
+
+          <figure class="research-figure">
+            <a class="figure-link" href="docs/assets/figures/Figure3_FINAL_Hero_JAL_AESR.webp?v=20260812b" target="_blank" rel="noopener" aria-label="Open Figure 3 at full resolution">
+              <img src="docs/assets/figures/Figure3_FINAL_Hero_JAL_AESR.webp?v=20260812b" alt="Conceptual synthesis showing one climate forcing producing groundwater-buffered, rainfall-dependent and surface-water-buffered agricultural water pathways" loading="lazy">
+            </a>
+            <figcaption class="figure-caption">
+              <span class="figure-kicker">Proposal Figure 3 · Conceptual synthesis</span>
+              <strong>One climate forcing, three agricultural water pathways.</strong> The same climate variability can be translated differently through aquifer storage and pumping, direct seasonal rainfall, or stored and routed surface water. JAL-AESR INDIA therefore evaluates agricultural water security as a function of water source, crop timing and agro-ecological context rather than rainfall alone.
+            </figcaption>
+          </figure>
+        </div>
+'''
+
+          # Replace the old single Figure 2 in Section 03 with the three-figure stack.
+          s, n3 = re.subn(
+              r'\n\s*<figure class="research-figure">\s*<a[^>]*Figure2_FINAL_Evidence_Multipanel\.webp.*?</figure>\s*',
+              '\n' + stack + '\n', s, count=1, flags=re.S
+          )
+
+          # Make the Section 03 introduction explicitly explain the three-figure sequence.
+          old_intro = ('The pilot deliberately uses simple in-situ observations rather than reproducing the full proposed national analysis. '
+                       'Its purpose is to demonstrate why rainfall, groundwater and surface water must be interpreted together with agricultural demand timing.')
+          new_intro = ('The rapid proof-of-need uses readily available in-situ observations to show why source-specific water pathways must be interpreted together with agricultural demand timing. '
+                       'The three figures move from spatial context, to observed source behaviour, to the integrated JAL-AESR INDIA concept.')
+          s = s.replace(old_intro, new_intro)
+
+          # Cache-bust the dedicated figure stylesheet.
+          s = s.replace('docs/assets/css/figures.css?v=1', 'docs/assets/css/figures.css?v=2')
+
+          if not (n1 == 1 and n2 == 1 and n3 == 1):
+              raise SystemExit(f'Unexpected figure layout: removed section01={n1}, removed section02={n2}, replaced section03={n3}')
+
+          path.write_text(s, encoding='utf-8')
+
+      - name: Apply clean full-width scientific figure styling
+        shell: bash
+        run: |
+          cat > docs/assets/css/figures.css <<'CSS'
+          .evidence-figure-stack{
+            display:grid;
+            gap:1.65rem;
+            margin:1.45rem 0 1.9rem;
+          }
+          .research-figure{
+            margin:0;
+            background:#fff;
+            border:1px solid var(--line);
+            border-radius:16px;
+            overflow:hidden;
+            box-shadow:0 8px 26px rgba(18,61,72,.055);
+          }
+          .figure-link{
+            display:block;
+            background:#fff;
+            text-decoration:none;
+            line-height:0;
+            overflow:hidden;
+          }
+          .figure-link img{
+            display:block;
+            width:100%;
+            max-width:100%;
+            height:auto;
+            max-height:none;
+            object-fit:contain;
+            image-rendering:auto;
+            background:#fff;
+          }
+          .figure-link:hover img{opacity:.985}
+          .figure-caption{
+            border-top:1px solid var(--line);
+            padding:1rem 1.2rem 1.08rem;
+            color:var(--muted);
+            font-size:.89rem;
+            line-height:1.55;
+          }
+          .figure-caption strong{color:var(--ink);font-weight:800}
+          .figure-kicker{
+            display:block;
+            margin-bottom:.28rem;
+            color:var(--brand);
+            font-size:.71rem;
+            font-weight:900;
+            letter-spacing:.10em;
+            text-transform:uppercase;
+          }
+          .figure-note{
+            display:block;
+            margin-top:.48rem;
+            color:#6e8087;
+            font-size:.78rem;
+            line-height:1.5;
+          }
+          @media(max-width:700px){
+            .evidence-figure-stack{gap:1rem;margin:1.1rem 0 1.45rem}
+            .research-figure{border-radius:12px}
+            .figure-caption{padding:.86rem .9rem .92rem;font-size:.83rem}
+            .figure-kicker{font-size:.67rem}
+            .figure-note{font-size:.74rem}
+          }
+          CSS
+
+      - name: Commit Section 03 figure layout
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html docs/assets/css/figures.css
+          git commit -m 'Show all three proposal figures only under preliminary proof of need'
+          git push
