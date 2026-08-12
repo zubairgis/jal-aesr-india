@@ -34,7 +34,7 @@
   position:absolute;
   right:.8rem;
   bottom:.8rem;
-  background:rgba(11,60,70,.90);
+  background:rgba(20,63,120,.92);
   color:#fff;
   border-radius:8px;
   padding:.38rem .58rem;
@@ -68,7 +68,7 @@
 .figure-note{
   display:block;
   margin-top:.48rem;
-  color:#6e8087;
+  color:#6e7d90;
   font-size:.78rem;
   line-height:1.5;
 }
@@ -80,3 +80,88 @@
   .figure-note{font-size:.74rem}
   .figure-link::after{display:none}
 }
+
+/* =========================================================
+   JAL-AESR INDIA · BLUE ACADEMIC THEME
+   Loaded after style.css so these values replace the former
+   teal/green site chrome while retaining scientific category
+   colours for groundwater/rainfall/surface-water evidence.
+   ========================================================= */
+:root{
+  --bg:#f5f8fc;
+  --surface:#ffffff;
+  --surface-2:#edf3fb;
+  --surface-3:#f8faff;
+  --ink:#172d45;
+  --ink-2:#334c68;
+  --muted:#65778b;
+  --muted-2:#7b8b9d;
+  --line:#d9e3f0;
+  --line-strong:#c6d4e5;
+  --brand:#1f5fae;
+  --brand-dark:#153f78;
+  --brand-soft:#e3edf9;
+  --shadow-sm:0 4px 16px rgba(25,67,119,.05);
+  --shadow:0 14px 36px rgba(25,67,119,.09);
+}
+
+body{background:var(--bg);color:var(--ink)}
+
+.site-header{
+  background:rgba(248,250,253,.95);
+  border-bottom-color:rgba(198,212,229,.90);
+}
+.brand-mark{
+  background:linear-gradient(145deg,#153f78,#2b6fbd);
+  box-shadow:0 4px 12px rgba(21,63,120,.18);
+}
+.site-nav a{color:#40566f}
+.site-nav a:hover,.site-nav a.active{
+  color:var(--brand);
+  border-bottom-color:#78a6da;
+}
+
+.section-muted{background:#eaf1f9}
+.section-dark{
+  background:linear-gradient(135deg,#123766,#1b5797);
+  color:#f7faff;
+}
+.section-dark .eyebrow{color:#b8d6f5}
+.section-dark .section-intro{color:#d5e3f2}
+
+.hero{
+  background:
+    radial-gradient(circle at 88% 12%,rgba(31,95,174,.14),transparent 28%),
+    radial-gradient(circle at 78% 72%,rgba(79,137,201,.11),transparent 31%),
+    linear-gradient(135deg,#fcfdff 0%,#f2f6fc 60%,#e8f0fa 100%);
+}
+.lead{color:#435a73}
+.button.primary{
+  background:var(--brand-dark);
+  box-shadow:0 5px 14px rgba(21,63,120,.16);
+}
+.button.secondary{color:var(--brand-dark)}
+.metric{background:#f8faff;border-color:#e1e9f3}
+.metric-value{color:var(--brand-dark)}
+
+.premise{border-left-color:var(--brand)}
+.premise blockquote{color:#294661}
+
+.map-shell{border-color:var(--line)}
+.map-toolbar{background:#f8faff}
+.map-toolbar strong,.map-action{color:var(--brand-dark)}
+.map-action:hover{border-color:#97b7dc;background:#f1f6fc}
+.map-sidebar{background:#f7faff}
+#map{background:#e8eef7}
+
+.figure-kicker,.eyebrow,.premise-label{color:var(--brand)}
+.research-figure{box-shadow:0 8px 26px rgba(25,67,119,.07)}
+
+.review-card,.tier,.pilot-stat,.card,.wide-card,.path-card{
+  border-color:var(--line);
+}
+
+/* Keep scientific pathway identity colours distinct from the page theme. */
+.path-card.gw{border-top-color:var(--gw)}
+.path-card.rain{border-top-color:var(--rain)}
+.path-card.sw{border-top-color:var(--sw)}
