@@ -20,6 +20,8 @@ Three contrasting hydro-agricultural pathways are used to demonstrate the need f
 
 The pilot is illustrative rather than nationally representative. Standardized anomalies are source-specific and are not a composite water-security index.
 
+The three proposal figures are presented together only under **03 · Preliminary proof of need** in the interactive reviewer companion.
+
 ## Repository structure
 
 - `docs/` — scientific overview, data provenance, reviewer guide, reproducibility notes and web assets.
