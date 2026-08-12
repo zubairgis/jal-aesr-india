@@ -2,6 +2,24 @@
   const qs = (s, c=document) => c.querySelector(s);
   const qsa = (s, c=document) => [...c.querySelectorAll(s)];
 
+  // Use the manually uploaded full-resolution PNG proposal figures.
+  const proposalFigurePNGs = [
+    'pilot/figures/Figure1_FINAL_India_AESR_WaterRegimes.png?v=20260812png',
+    'pilot/figures/Figure2_FINAL_Evidence_Multipanel.png?v=20260812png',
+    'pilot/figures/Figure3_FINAL_Hero_JAL_AESR.png?v=20260812png'
+  ];
+  qsa('.research-figure').forEach((figure, i) => {
+    const png = proposalFigurePNGs[i];
+    if (!png) return;
+    const link = qs('.figure-link', figure);
+    const img = qs('.figure-link img', figure);
+    if (link) link.href = png;
+    if (img) {
+      img.src = png;
+      img.removeAttribute('srcset');
+    }
+  });
+
   const navToggle = qs('.nav-toggle');
   const siteNav = qs('.site-nav');
   if (navToggle && siteNav) {
