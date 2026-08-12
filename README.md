@@ -1,96 +1,39 @@
 # JAL-AESR INDIA
 
-**A NISAR–IRS multi-sensor framework for assessing surface–groundwater coupling, irrigation security and agricultural water resilience across India’s agro-ecological regions**
+**JAL-AESR INDIA: A NISAR–IRS Multi-Sensor Framework for Assessing Surface–Groundwater Coupling, Irrigation Security and Agricultural Water Resilience across India’s Agro-Ecological Regions**
 
-> **Core idea:** Agricultural water security is determined not only by how much rain falls, but by where water is stored, how farmers can access it, and whether it is available when crops actually require it.
+Interactive reviewer companion: https://zubairgis.github.io/jal-aesr-india/
 
-## Interactive reviewer companion
+This repository supports the proposal-stage scientific concept, preliminary proof-of-need evidence, interactive AESR explorer, reproducibility documentation and future Digital Water Observatory architecture.
 
-A proposal-stage interactive research companion is available in [`docs/index.html`](docs/index.html). It is designed for GitHub Pages and lets reviewers:
+## Scientific premise
 
-- explore India’s state/UT and agro-ecological subregion framework;
-- click AESRs to inspect climate, soil, growing-period and water-capacity context;
-- zoom to the three contrasting proof-of-need landscapes;
-- compare groundwater-buffered, rainfall-dependent and surface-water-buffered agricultural pathways; and
-- see how the pilot evidence scales into the proposed national JAL-AESR INDIA architecture.
+Agricultural water security is determined not only by rainfall amount but by how water is stored, routed, accessed and made available during agricultural demand periods. JAL-AESR INDIA therefore integrates rainfall, surface water, soil moisture, groundwater, irrigation dependence, crop-water timing and agro-ecological context.
 
-The web map prefers local GeoJSONs in `docs/data/` and currently falls back to the established web-ready India/AESR layers maintained in the companion `aesr-shift-india` repository. This keeps the reviewer experience live while allowing the repository to become fully self-contained later without changing the map code.
+## Rapid proof of need
 
-## Why this project
+Three contrasting hydro-agricultural pathways are used to demonstrate the need for an integrated framework:
 
-India does not face one agricultural water-security problem. Similar climate variability can produce very different agricultural outcomes where farming is:
+- **Karnal, Haryana:** groundwater-buffered agriculture.
+- **Yavatmal, Maharashtra:** rainfall-dependent agriculture.
+- **Mettur–Cauvery, Tamil Nadu:** surface-water-buffered agriculture.
 
-- **groundwater-buffered** — irrigation can continue during rainfall deficits while aquifer stress accumulates;
-- **rainfall-dependent** — crop-water exposure responds more directly to monsoon timing and dry spells; or
-- **surface-water-buffered** — rainfall and upstream flows are converted into stored or routed irrigation supply.
+The pilot is illustrative rather than nationally representative. Standardized anomalies are source-specific and are not a composite water-security index.
 
-JAL-AESR INDIA therefore proposes a national framework that integrates **rainfall, surface water, groundwater, crop-water timing and agro-ecological context** rather than assessing each water source independently.
+## Repository structure
 
-## Rapid proof-of-need pilot
+- `docs/` — scientific overview, data provenance, reviewer guide, reproducibility notes and web assets.
+- `data/` — compact web-ready spatial reference layers.
+- `pilot/` — pilot documentation, figures, tables and scripts.
+- `src/` — future analytical modules.
+- `notebooks/` — reproducible notebook workflows.
 
-The proposal is supported by a deliberately lightweight in-situ pilot designed to demonstrate the need for integration rather than reproduce the full national methodology.
+Large raw hydrological and Earth-observation datasets are intentionally excluded. Authoritative data remain with their source agencies or project storage; compact derived evidence, metadata and code are version-controlled here.
 
-| Pilot | Illustrative landscape | Water regime | Preliminary variable |
-|---|---|---|---|
-| P1 | Karnal, Haryana | Groundwater-buffered | Groundwater-level variability |
-| P2 | Yavatmal, Maharashtra | Rainfall-dependent | Reported rainfall variability |
-| P3 | Mettur–Cauvery, Tamil Nadu | Surface-water-buffered | Surface-water-level variability |
+## Reviewer route
 
-The pilot uses existing public observations within the **2021–2025 analysis window, subject to source-specific data availability**. Missing periods are retained transparently. Source-specific standardized anomalies are used only for visual comparison and are **not** a composite water-security index.
-
-## Proposed national research architecture
-
-The full programme will develop a national analytical system in which:
-
-\[
-\mathrm{AgroWaterState}_{i,t}=f(\mathrm{SurfaceWater}_{i,t},\mathrm{SoilMoisture}_{i,t},\mathrm{Groundwater}_{i,t},\mathrm{Recharge}_{i,t},\mathrm{IrrigationDependence}_{i,t},\mathrm{CropWaterDemand}_{i,t})
-\]
-
-The central operational concept is **crop-stage water availability**: whether sufficient water is accessible from the locally relevant source during critical crop-development periods.
-
-## What makes JAL-AESR INDIA different
-
-1. **Source-aware:** rainfall, surface water and groundwater are treated as connected but non-equivalent water pathways.
-2. **Crop-timed:** assessment is aligned to agricultural demand rather than annual hydrological totals alone.
-3. **Agro-ecologically transferable:** India’s agro-ecological regions provide the national spatial framework.
-4. **Observation-first:** groundwater state is anchored to monitored observations; NISAR is not treated as a direct groundwater-storage sensor.
-5. **India-first Earth observation:** NISAR, IRS/Resourcesat, EOS-04/RISAT, Cartosat and Bhuvan are integrated with complementary Sentinel, Landsat and climate products where useful.
-6. **Open and reproducible:** code, metadata schemas, non-restricted derived data and figure workflows will be version controlled here.
-
-## Repository guide
-
-- [`docs/index.html`](docs/index.html) — interactive reviewer companion and web map
-- [`docs/data/`](docs/data/) — web-ready spatial reference data and pilot sites
-- [`docs/`](docs/) — project concept, data architecture and reproducibility notes
-- [`pilot/`](pilot/) — rapid proof-of-need evidence used in the proposal
-- [`pilot/figures/`](pilot/figures/) — proposal-ready figures
-- [`pilot/tables/`](pilot/tables/) — compact derived tables used to generate figures
-- [`src/`](src/) — reusable analysis code for the full programme
-- [`notebooks/`](notebooks/) — reproducible exploratory and demonstration notebooks
-- [`data/`](data/) — metadata and redistribution-safe reference/derived material only
-
-## Reviewer quick route
-
-For a rapid review of the scientific case:
-
-1. Open the interactive reviewer companion in [`docs/index.html`](docs/index.html).
-2. Read [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md).
-3. View the proposal figures in [`pilot/figures/`](pilot/figures/).
-4. Read [`docs/PROJECT_OVERVIEW.md`](docs/PROJECT_OVERVIEW.md).
-5. Check [`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md) and [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md).
-
-## Data policy
-
-Large primary datasets, telemetry archives and satellite rasters are intentionally **not committed** to GitHub. They remain with authoritative providers or secured project storage. The repository stores:
-
-- source identifiers and metadata;
-- compact derived tables;
-- scripts and notebooks;
-- non-restricted vector layers where redistribution is permitted;
-- final figures and documentation.
-
-This keeps the repository lightweight, auditable and reproducible without duplicating authoritative national data holdings.
-
-## Status
-
-**Proposal-stage research programme.** The current repository documents the scientific concept and preliminary proof-of-need. National-scale NISAR–IRS integration, crop-specific modelling, validation and the proposed Digital Water Observatory form part of the full research programme.
+1. Open the [interactive research companion](https://zubairgis.github.io/jal-aesr-india/).
+2. Explore the India AESR map and three pilot regimes.
+3. Review the three figures under **03 · Preliminary proof of need**.
+4. Read `docs/PROJECT_OVERVIEW.md` for the scientific architecture.
+5. Read `docs/DATA_SOURCES.md` and `docs/REPRODUCIBILITY.md` for provenance and reproducibility.
